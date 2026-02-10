@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_app
+    username: admin
+    password: Joshi@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:your_google_client_id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:your_google_client_secret}
+            scope:
+              - openid
+              - profile
+              - email
+          github:
+            client-id: ${GITHUB_CLIENT_ID:your_github_client_id}
+            client-secret: ${GITHUB_CLIENT_SECRET:your_github_client_secret}
+            scope:
+              - user:email
+              - read:user
+
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-key-1234567890-abcdefghijklmnopqrstuvwxyz-EXTRA-CHARS-ADD-MORE-1234567890}
+    issuer: ${JWT_ISSUER:api.substring.com}
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+    cookie-secure: ${JWT_COOKIE_SECURE:true}
+    cookie-http-only: ${JWT_COOKIE_HTTP_ONLY:true}
+    cookie-same-site: ${JWT_COOKIE_SAME_SITE:lax}
+    cookie-domain: ${JWT_COOKIE_DOMAIN:}
+
+app:
+  cors:
+    frontend_url: ${FRONT_END_URL:http://localhost:5173}
+  auth:
+    frontend:
+      success-redirect: ${FRONT_END_SUCCESS_URL:http://localhost:5173/auth/success}
+      failure-redirect: ${FRONT_END_FAILURE_URL:http://localhost:5173/auth/failure}

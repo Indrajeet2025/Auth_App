@@ -1,0 +1,13 @@
+# Backend build
+auth_backend/target/
+
+# Env files
+.env
+*.env
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
